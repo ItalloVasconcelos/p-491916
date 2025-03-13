@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,27 +8,36 @@ import { EventGrid } from "@/components/home/EventGrid";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { PhotographerShowcase } from "@/components/home/PhotographerShowcase";
 import { ContactCTA } from "@/components/home/ContactCTA";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   return (
-    <div className="bg-[rgba(250,252,254,1)] flex flex-col overflow-hidden items-stretch pb-[35px]">
+    <div className="bg-[rgba(250,252,254,1)] flex flex-col overflow-hidden items-stretch">
       <Navbar />
 
-      <main>
+      <main className="flex flex-col items-center">
         <HeroSection />
         <SearchSection />
         <EventGrid />
 
-        <button className="bg-[rgba(217,24,26,1)] min-h-[46px] gap-2 text-base text-[#F7F7F9] font-semibold text-center mr-[89px] mt-2.5 px-2.5 py-3.5 rounded-lg max-md:mr-2.5 hover:bg-[rgba(195,22,24,1)]">
-          Ver todos os eventos
-        </button>
+        <div className="container max-w-7xl mx-auto px-4 flex justify-center mt-8">
+          <Button 
+            className="bg-[rgba(217,24,26,1)] text-[#F7F7F9] font-semibold px-8 py-3 h-[46px] rounded-lg hover:bg-[rgba(195,22,24,1)]"
+          >
+            Ver todos os eventos
+          </Button>
+        </div>
 
         <HowItWorks />
         <PhotographerShowcase />
 
-        <button className="bg-[rgba(217,24,26,1)] min-h-[46px] gap-2 text-base text-[#F7F7F9] font-semibold text-center mt-2.5 px-2.5 py-3.5 rounded-lg max-md:mr-0.5 hover:bg-[rgba(195,22,24,1)]">
-          Ver todos os Portfólios
-        </button>
+        <div className="container max-w-7xl mx-auto px-4 flex justify-center mt-8">
+          <Button 
+            className="bg-[rgba(217,24,26,1)] text-[#F7F7F9] font-semibold px-8 py-3 h-[46px] rounded-lg hover:bg-[rgba(195,22,24,1)]"
+          >
+            Ver todos os Portfólios
+          </Button>
+        </div>
 
         <ContactCTA />
       </main>

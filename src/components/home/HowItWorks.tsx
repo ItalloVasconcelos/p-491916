@@ -1,3 +1,4 @@
+
 import React from "react";
 
 const steps = [
@@ -35,16 +36,16 @@ const steps = [
 
 export const HowItWorks = () => {
   return (
-    <section className="flex w-full flex-col items-stretch mt-12 px-20 max-md:max-w-full max-md:mt-10 max-md:px-5">
-      <h2 className="text-black text-center text-[40px] font-bold tracking-[-0.8px]">
+    <section className="container max-w-7xl mx-auto mt-12 px-4 max-md:mt-10">
+      <h2 className="text-black text-[40px] font-bold tracking-[-0.8px] text-left mb-7">
         Como funciona
       </h2>
 
-      <div className="flex gap-[19px] flex-wrap mt-7">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
         {steps.map((step, index) => (
           <div
             key={index}
-            className="bg-[rgba(236,241,244,1)] flex min-w-60 min-h-[414px] flex-col items-stretch justify-between w-[302px] px-3.5 py-[30px] rounded-2xl"
+            className="bg-[rgba(236,241,244,1)] flex flex-col items-stretch justify-between h-[414px] px-3.5 py-[30px] rounded-2xl"
           >
             <div
               className={`${step.iconBg} self-center flex items-center gap-[11px] w-[82px] h-[82px] p-[11px] rounded-[14px]`}

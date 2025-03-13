@@ -1,4 +1,6 @@
+
 import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const photographers = Array(4).fill({
   image:
@@ -8,44 +10,41 @@ const photographers = Array(4).fill({
 
 export const PhotographerShowcase = () => {
   return (
-    <section className="w-full text-center mt-[39px] max-md:max-w-full">
-      <div className="flex w-[902px] max-w-full flex-col text-black justify-center">
-        <h2 className="text-[40px] font-bold tracking-[-0.8px] max-md:max-w-full">
+    <section className="container max-w-7xl mx-auto px-4 mt-[39px]">
+      <div className="flex flex-col text-black items-center mb-8">
+        <h2 className="text-[40px] font-bold tracking-[-0.8px]">
           Encontrar um fotógrafo
         </h2>
-        <p className="text-2xl font-medium mt-[15px] max-md:max-w-full">
+        <p className="text-2xl font-medium mt-[15px]">
           Escolha um de nossos especialistas para registrar seu evento!
         </p>
       </div>
 
-      <div className="flex w-full items-center gap-2.5 flex-wrap mt-[38px] max-md:max-w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
         {photographers.map((photographer, index) => (
-          <div
-            key={index}
-            className="self-stretch min-w-60 grow shrink w-[247px] my-auto"
-          >
-            <div className="flex flex-col relative aspect-[0.896] w-full items-stretch pt-[7px] rounded-[15px]">
-              <img
-                src={photographer.image}
-                alt={photographer.handle}
-                className="absolute h-full w-full object-cover inset-0"
-              />
-              <div className="relative w-[108px] bg-white gap-2.5 text-sm text-black font-medium leading-[1.4] px-1.5 py-[5px] rounded-lg">
-                Em destaque
-              </div>
-              <div className="relative bg-[rgba(236,241,244,1)] flex min-h-12 w-full items-center gap-[40px_87px] justify-between mt-[254px] px-2.5 py-1.5 rounded-[0px_0px_15px_15px] max-md:mt-10">
-                <div className="self-stretch flex items-center gap-[5px] text-sm text-black font-medium whitespace-nowrap leading-[1.4] my-auto">
-                  <div className="bg-[rgba(217,217,217,1)] self-stretch flex w-[25px] shrink-0 h-[25px] my-auto rounded-[5px]" />
-                  <div className="self-stretch my-auto">
-                    {photographer.handle}
-                  </div>
+          <Card key={index} className="relative overflow-hidden rounded-[15px]">
+            <CardContent className="p-0">
+              <div className="relative aspect-[0.9] w-full">
+                <img
+                  src={photographer.image}
+                  alt={photographer.handle}
+                  className="absolute h-full w-full object-cover inset-0"
+                />
+                <div className="absolute top-2 left-2 bg-white text-sm text-black font-medium leading-[1.4] px-1.5 py-[5px] rounded-lg">
+                  Em destaque
                 </div>
-                <button className="self-stretch min-h-9 gap-2.5 text-base text-[#5762D5] font-semibold my-auto px-[5px] py-[9px] hover:text-[#4751C4]">
-                  Ver perfil
-                </button>
+                <div className="absolute bottom-0 left-0 right-0 bg-[rgba(236,241,244,1)] flex items-center justify-between px-2.5 py-1.5 rounded-b-[15px]">
+                  <div className="flex items-center gap-[5px] text-sm text-black font-medium whitespace-nowrap leading-[1.4]">
+                    <div className="bg-[rgba(217,217,217,1)] w-[25px] h-[25px] rounded-[5px]" />
+                    <div>{photographer.handle}</div>
+                  </div>
+                  <button className="text-base text-[#5762D5] font-semibold px-[5px] py-[9px] hover:text-[#4751C4]">
+                    Ver perfil
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </section>
