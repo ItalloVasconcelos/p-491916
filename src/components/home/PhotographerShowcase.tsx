@@ -11,7 +11,7 @@ const photographers = Array(4).fill({
 export const PhotographerShowcase = () => {
   return (
     <section className="container max-w-7xl mx-auto px-4 mt-[39px]">
-      <div className="flex flex-col text-black items-center mb-8">
+      <div className="flex flex-col text-black items-start mb-8">
         <h2 className="text-[40px] font-bold tracking-[-0.8px]">
           Encontrar um fotógrafo
         </h2>

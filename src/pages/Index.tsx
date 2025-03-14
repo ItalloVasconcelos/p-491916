@@ -20,7 +20,7 @@ const Index = () => {
         <SearchSection />
         <EventGrid />
 
-        <div className="container max-w-7xl mx-auto px-4 flex justify-center mt-8">
+        <div className="container max-w-7xl mx-auto px-4 flex justify-end mt-8">
           <Button 
             className="bg-[rgba(217,24,26,1)] text-[#F7F7F9] font-semibold px-8 py-3 h-[46px] rounded-lg hover:bg-[rgba(195,22,24,1)]"
           >
@@ -31,7 +31,7 @@ const Index = () => {
         <HowItWorks />
         <PhotographerShowcase />
 
-        <div className="container max-w-7xl mx-auto px-4 flex justify-center mt-8">
+        <div className="container max-w-7xl mx-auto px-4 flex justify-end mt-8">
           <Button 
             className="bg-[rgba(217,24,26,1)] text-[#F7F7F9] font-semibold px-8 py-3 h-[46px] rounded-lg hover:bg-[rgba(195,22,24,1)]"
           >

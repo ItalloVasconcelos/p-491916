@@ -1,7 +1,25 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { AuthModals } from "@/components/auth/AuthModals";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
 
 export const Navbar = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<"login" | "register">("login");
+
+  const handleLoginClick = () => {
+    setAuthModalMode("login");
+    setAuthModalOpen(true);
+  };
+
+  const handleRegisterClick = () => {
+    setAuthModalMode("register");
+    setAuthModalOpen(true);
+  };
+
   return (
     <nav className="min-h-14 w-full text-base font-semibold text-center">
       <div className="bg-[rgba(250,252,254,1)] border-neutral-200 flex min-h-14 w-full items-center gap-[40px_100px] justify-between flex-wrap px-[30px] py-[7px] border-b">
@@ -26,30 +44,29 @@ export const Navbar = () => {
         </div>
 
         <div className="self-stretch flex min-w-60 items-center gap-[15px] text-[#5762D5] whitespace-nowrap my-auto">
-          <div className="self-stretch flex min-h-9 items-center gap-2 text-[#0E0E2C] justify-center my-auto px-[5px] py-1.5">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/a3395c075c86a9e022e23b909420e31009e1fedf545f3c0008dca452c01352fe?placeholderIfAbsent=true"
-              alt="Cart"
-              className="aspect-[1] object-contain w-6 self-stretch shrink-0 my-auto"
-            />
+          <Button
+            variant="ghost"
+            className="self-stretch min-h-9 flex items-center gap-2 text-[#0E0E2C] justify-center my-auto px-[5px] py-1.5"
+          >
+            <ShoppingCart className="h-6 w-6" />
             <span className="self-stretch my-auto">Carrinho</span>
-          </div>
+          </Button>
 
           <div className="bg-[rgba(241,243,244,1)] self-stretch flex w-px shrink-0 h-9 gap-2.5 my-auto" />
 
-          <Link
-            to="/register"
+          <button
+            onClick={handleRegisterClick}
             className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
           >
             Cadastrar
-          </Link>
+          </button>
 
-          <Link
-            to="/login"
+          <button
+            onClick={handleLoginClick}
             className="self-stretch min-h-9 gap-2.5 my-auto px-5 py-[9px] rounded-md border-[rgba(87,98,213,1)] border-solid border-2 hover:bg-[rgba(87,98,213,0.1)]"
           >
             Entrar
-          </Link>
+          </button>
 
           <Link
             to="/explore"
@@ -59,6 +76,12 @@ export const Navbar = () => {
           </Link>
         </div>
       </div>
+
+      <AuthModals 
+        isOpen={authModalOpen} 
+        onOpenChange={setAuthModalOpen} 
+        initialMode={authModalMode} 
+      />
     </nav>
   );
 };
