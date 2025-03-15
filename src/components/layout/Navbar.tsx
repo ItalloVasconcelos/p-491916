@@ -1,14 +1,15 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { AuthModals } from "@/components/auth/AuthModals";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, UserCog, Image } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Navbar = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<"login" | "register">("login");
+  const { isAuthenticated, login, logout } = useAuth();
 
   const handleLoginClick = () => {
     setAuthModalMode("login");
@@ -54,19 +55,41 @@ export const Navbar = () => {
 
           <div className="bg-[rgba(241,243,244,1)] self-stretch flex w-px shrink-0 h-9 gap-2.5 my-auto" />
 
-          <button
-            onClick={handleRegisterClick}
-            className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
-          >
-            Cadastrar
-          </button>
+          {isAuthenticated ? (
+            <>
+              <Link
+                to="/my-photos"
+                className="self-stretch min-h-9 flex items-center gap-1.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
+              >
+                <Image className="h-5 w-5" />
+                Minhas Fotos
+              </Link>
+              <Button
+                onClick={() => logout()}
+                variant="ghost"
+                className="self-stretch min-h-9 flex items-center gap-1.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
+              >
+                <UserCog className="h-5 w-5" />
+                Minha Conta
+              </Button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={handleRegisterClick}
+                className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
+              >
+                Cadastrar
+              </button>
 
-          <button
-            onClick={handleLoginClick}
-            className="self-stretch min-h-9 gap-2.5 my-auto px-5 py-[9px] rounded-md border-[rgba(87,98,213,1)] border-solid border-2 hover:bg-[rgba(87,98,213,0.1)]"
-          >
-            Entrar
-          </button>
+              <button
+                onClick={handleLoginClick}
+                className="self-stretch min-h-9 gap-2.5 my-auto px-5 py-[9px] rounded-md border-[rgba(87,98,213,1)] border-solid border-2 hover:bg-[rgba(87,98,213,0.1)]"
+              >
+                Entrar
+              </button>
+            </>
+          )}
 
           <Link
             to="/explore"

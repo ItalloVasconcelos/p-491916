@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -32,6 +33,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
   const [passwordError, setPasswordError] = useState(false);
   const [registerError, setRegisterError] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const { register } = useAuth();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,7 +70,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!fullName || !email || !cpf || !password || !confirmPassword || emailError || passwordError) {
@@ -76,8 +78,12 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
       return;
     }
     
-    // Normally would register with Keycloak here
-    setRegisterError(true); // Simulating an error for demonstration
+    const success = await register(fullName, email, cpf, password);
+    if (success) {
+      onOpenChange(false);
+    } else {
+      setRegisterError(true);
+    }
   };
 
   return (
@@ -89,14 +95,14 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           </DialogTitle>
         </DialogHeader>
         
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
-          {registerError && (
-            <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md">
-              <AlertCircle className="h-5 w-5 flex-shrink-0" />
-              <p className="text-sm">Erro ao criar conta, verifique seus dados</p>
-            </div>
-          )}
+        {registerError && (
+          <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md mt-2 mb-4">
+            <AlertCircle className="h-5 w-5 flex-shrink-0" />
+            <p className="text-sm">Erro ao criar conta, verifique seus dados</p>
+          </div>
+        )}
 
+        <form onSubmit={handleSubmit} className="space-y-4 py-4">
           <div className="space-y-2">
             <label
               htmlFor="fullName"

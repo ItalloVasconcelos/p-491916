@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [emailError, setEmailError] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const { login } = useAuth();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,7 +45,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email || !password || emailError) {
@@ -51,8 +53,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       return;
     }
     
-    // Normally would validate with Keycloak here
-    setLoginError(true); // Simulating an error for demonstration
+    const success = await login(email, password);
+    if (success) {
+      onOpenChange(false);
+    } else {
+      setLoginError(true);
+    }
   };
 
   return (
@@ -64,14 +70,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           </DialogTitle>
         </DialogHeader>
         
+        {loginError && (
+          <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md mt-2 mb-4">
+            <AlertCircle className="h-5 w-5 flex-shrink-0" />
+            <p className="text-sm">Login inválido, verifique suas credenciais</p>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
-          {loginError && (
-            <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md">
-              <AlertCircle className="h-5 w-5 flex-shrink-0" />
-              <p className="text-sm">Login inválido, verifique suas credenciais</p>
-            </div>
-          )}
-          
           <div className="space-y-2">
             <label
               htmlFor="email"
@@ -88,8 +94,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 onFocus={() => setFocusedField("email")}
                 onBlur={() => setFocusedField(null)}
                 className={`pl-10 ${
-                  emailError ? "border-[#Ba2022] focus:border-[#Ba2022] focus:ring-[#Ba2022]" : 
-                  focusedField === "email" ? "border-[#acafe9] focus:border-[#acafe9] focus:ring-[#acafe9]" : ""
+                  emailError ? "border-[#Ba2022]" : 
+                  focusedField === "email" ? "border-[#acafe9]" : ""
                 }`}
                 placeholder="email"
               />
