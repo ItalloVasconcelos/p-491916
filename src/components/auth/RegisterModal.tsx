@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { AlertTriangle, Eye, EyeOff, Mail, Lock, User, AlertCircle } from "lucide-react";
+import { AlertTriangle, Eye, EyeOff, Mail, Lock, User, AlertCircle, CreditCard } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -23,6 +23,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
 }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -70,7 +71,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!fullName || !email || !password || !confirmPassword || emailError || passwordError) {
+    if (!fullName || !email || !cpf || !password || !confirmPassword || emailError || passwordError) {
       setRegisterError(true);
       return;
     }
@@ -89,6 +90,13 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
+          {registerError && (
+            <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md">
+              <AlertCircle className="h-5 w-5 flex-shrink-0" />
+              <p className="text-sm">Erro ao criar conta, verifique seus dados</p>
+            </div>
+          )}
+
           <div className="space-y-2">
             <label
               htmlFor="fullName"
@@ -132,18 +140,40 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   emailError ? "border-[#Ba2022]" : 
                   focusedField === "email" ? "border-[#acafe9]" : ""
                 }`}
-                placeholder="seu@email.com"
+                placeholder="email"
               />
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               {emailError && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <AlertCircle className="h-5 w-5 text-[#Ba2022]" />
+                <div className="flex items-center gap-1 absolute -top-6 right-0">
+                  <p className="text-xs text-[#Ba2022]">E-mail inválido</p>
+                  <AlertCircle className="h-4 w-4 text-[#Ba2022]" />
                 </div>
               )}
             </div>
-            {emailError && (
-              <p className="text-sm text-[#Ba2022] mt-1">E-mail inválido</p>
-            )}
+          </div>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="cpf"
+              className="block text-sm font-medium text-gray-700"
+            >
+              CPF
+            </label>
+            <div className="relative">
+              <Input
+                id="cpf"
+                type="text"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                onFocus={() => setFocusedField("cpf")}
+                onBlur={() => setFocusedField(null)}
+                className={`pl-10 ${
+                  focusedField === "cpf" ? "border-[#acafe9]" : ""
+                }`}
+                placeholder="Digite seu CPF"
+              />
+              <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -165,7 +195,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                   passwordError ? "border-[#Ba2022]" : 
                   focusedField === "password" ? "border-[#acafe9]" : ""
                 }`}
-                placeholder="Digite sua senha"
+                placeholder="password"
               />
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <button
@@ -217,20 +247,16 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
               </button>
             </div>
             {passwordError && (
-              <p className="text-sm text-[#Ba2022] mt-1">As senhas não coincidem</p>
+              <div className="flex items-center gap-1 absolute right-0">
+                <p className="text-xs text-[#Ba2022]">As senhas não coincidem</p>
+                <AlertCircle className="h-4 w-4 text-[#Ba2022]" />
+              </div>
             )}
           </div>
 
-          {registerError && (
-            <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md">
-              <AlertTriangle className="h-5 w-5 flex-shrink-0" />
-              <p className="text-sm">Erro ao criar conta, verifique seus dados</p>
-            </div>
-          )}
-
           <Button
             type="submit"
-            className="w-full bg-[rgba(217,24,26,1)] hover:bg-[rgba(195,22,24,1)]"
+            className="w-full bg-[#D9181a] hover:bg-[rgba(195,22,24,1)] rounded-xl"
           >
             Criar Conta
           </Button>
@@ -260,14 +286,14 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
             Já tem uma conta?{" "}
             <button
               onClick={onLoginClick}
-              className="text-[#5762D5] hover:underline font-medium"
+              className="text-black hover:underline font-medium underline"
             >
               Entrar
             </button>
           </p>
           <p className="text-sm">
             É fotógrafo?{" "}
-            <a href="#" className="text-[#5762D5] hover:underline font-medium">
+            <a href="#" className="text-black hover:underline font-medium underline">
               Acesse cadastro para fotógrafos
             </a>
           </p>

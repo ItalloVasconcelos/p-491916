@@ -42,10 +42,10 @@ export const HowItWorks = () => {
         Como funciona
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
+      <div className="flex flex-wrap lg:flex-nowrap justify-center items-center gap-1">
         {steps.map((step, index) => (
           <React.Fragment key={index}>
-            <div className="bg-[rgba(236,241,244,1)] flex flex-col items-stretch justify-between h-[414px] px-3.5 py-[30px] rounded-2xl">
+            <div className="bg-[rgba(236,241,244,1)] flex flex-col items-stretch justify-between h-[414px] w-full lg:w-1/4 px-3.5 py-[30px] rounded-2xl">
               <div
                 className={`${step.iconBg} self-center flex items-center justify-center w-[82px] h-[82px] p-[11px] rounded-[14px]`}
               >
@@ -71,8 +71,10 @@ export const HowItWorks = () => {
             </div>
 
             {index < steps.length - 1 && (
-              <div className="hidden lg:flex items-center justify-center">
-                <ArrowRight className="h-10 w-10 text-[#E56365]" />
+              <div className="flex items-center justify-center -mx-3 z-10">
+                <div className="bg-[#D9181a] rounded-full p-3">
+                  <ArrowRight className="h-6 w-6 text-white" />
+                </div>
               </div>
             )}
           </React.Fragment>

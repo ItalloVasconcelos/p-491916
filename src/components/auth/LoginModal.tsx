@@ -6,11 +6,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { RegisterModal } from "./RegisterModal";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -67,6 +65,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
+          {loginError && (
+            <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md">
+              <AlertCircle className="h-5 w-5 flex-shrink-0" />
+              <p className="text-sm">Login inválido, verifique suas credenciais</p>
+            </div>
+          )}
+          
           <div className="space-y-2">
             <label
               htmlFor="email"
@@ -86,18 +91,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   emailError ? "border-[#Ba2022] focus:border-[#Ba2022] focus:ring-[#Ba2022]" : 
                   focusedField === "email" ? "border-[#acafe9] focus:border-[#acafe9] focus:ring-[#acafe9]" : ""
                 }`}
-                placeholder="seu@email.com"
+                placeholder="email"
               />
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               {emailError && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <AlertCircle className="h-5 w-5 text-[#Ba2022]" />
+                <div className="flex items-center gap-1 absolute -top-6 right-0">
+                  <p className="text-xs text-[#Ba2022]">E-mail inválido</p>
+                  <AlertCircle className="h-4 w-4 text-[#Ba2022]" />
                 </div>
               )}
             </div>
-            {emailError && (
-              <p className="text-sm text-[#Ba2022] mt-1">E-mail inválido</p>
-            )}
           </div>
 
           <div className="space-y-2">
@@ -119,7 +122,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   loginError ? "border-[#Ba2022]" : 
                   focusedField === "password" ? "border-[#acafe9]" : ""
                 }`}
-                placeholder="Digite sua senha"
+                placeholder="password"
               />
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
               <button
@@ -138,21 +141,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
           <a
             href="#"
-            className="block text-right text-sm text-black hover:underline"
+            className="block text-left text-sm text-black hover:underline underline"
           >
             Esqueci minha senha
           </a>
 
-          {loginError && (
-            <div className="flex items-center gap-2 p-3 bg-red-50 text-[#Ba2022] rounded-md">
-              <AlertTriangle className="h-5 w-5 flex-shrink-0" />
-              <p className="text-sm">Login inválido, verifique suas credenciais</p>
-            </div>
-          )}
-
           <Button
             type="submit"
-            className="w-full bg-[rgba(217,24,26,1)] hover:bg-[rgba(195,22,24,1)]"
+            className="w-full bg-[#D9181a] hover:bg-[rgba(195,22,24,1)] rounded-xl"
           >
             Entrar
           </Button>
@@ -182,14 +178,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             Ainda não tem uma conta?{" "}
             <button
               onClick={onRegisterClick}
-              className="text-[#5762D5] hover:underline font-medium"
+              className="text-black hover:underline font-medium underline"
             >
               Cadastrar
             </button>
           </p>
           <p className="text-sm">
             É fotógrafo?{" "}
-            <a href="#" className="text-[#5762D5] hover:underline font-medium">
+            <a href="#" className="text-black hover:underline font-medium underline">
               Acesse o login para fotógrafos
             </a>
           </p>
