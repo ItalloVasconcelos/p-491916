@@ -1,13 +1,17 @@
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 // Create photographer portfolio data
 const PHOTOGRAPHERS = [
   {
+    id: "vini",
     name: "Vinicius Silva",
     handle: "@vini.fotografia",
     bio: "Especialista em fotografia de eventos esportivos e outdoor",
@@ -17,6 +21,7 @@ const PHOTOGRAPHERS = [
     }))
   },
   {
+    id: "marina",
     name: "Marina Costa",
     handle: "@marina.costa",
     bio: "Fotógrafa profissional com foco em eventos culturais e sociais",
@@ -26,6 +31,7 @@ const PHOTOGRAPHERS = [
     }))
   },
   {
+    id: "pedro",
     name: "Pedro Nunes",
     handle: "@nunes.foto",
     bio: "Fotógrafo especializado em fotografia de eventos corporativos",
@@ -35,11 +41,52 @@ const PHOTOGRAPHERS = [
     }))
   },
   {
+    id: "juliana",
     name: "Juliana Santos",
     handle: "@ju.santos",
     bio: "Especialista em fotografia de casamentos e eventos sociais",
     photos: Array(4).fill(null).map((_, i) => ({ 
       id: `juliana_${i}`,
+      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
+    }))
+  },
+  {
+    id: "carlos",
+    name: "Carlos Mendes",
+    handle: "@carlos.photos",
+    bio: "Fotógrafo especializado em fotografia de natureza e paisagens",
+    photos: Array(4).fill(null).map((_, i) => ({ 
+      id: `carlos_${i}`,
+      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
+    }))
+  },
+  {
+    id: "ana",
+    name: "Ana Oliveira",
+    handle: "@ana.oliveira",
+    bio: "Fotógrafa com foco em eventos corporativos e retratos profissionais",
+    photos: Array(4).fill(null).map((_, i) => ({ 
+      id: `ana_${i}`,
+      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
+    }))
+  },
+  {
+    id: "roberto",
+    name: "Roberto Lima",
+    handle: "@roberto.lima",
+    bio: "Fotógrafo especializado em fotografia esportiva e de ação",
+    photos: Array(4).fill(null).map((_, i) => ({ 
+      id: `roberto_${i}`,
+      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
+    }))
+  },
+  {
+    id: "camila",
+    name: "Camila Rocha",
+    handle: "@camila.rocha",
+    bio: "Fotógrafa de eventos culturais e shows",
+    photos: Array(4).fill(null).map((_, i) => ({ 
+      id: `camila_${i}`,
       url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
     }))
   }
@@ -62,6 +109,15 @@ const Portfolios = () => {
       <main className="flex flex-col items-center">
         <div className="w-full bg-[rgba(236,241,244,1)] py-16">
           <div className="container max-w-7xl mx-auto px-4">
+            <div className="flex items-center mb-6">
+              <Link to="/">
+                <Button variant="ghost" className="flex items-center gap-2 text-black">
+                  <ArrowLeft className="h-5 w-5" />
+                  Voltar
+                </Button>
+              </Link>
+            </div>
+            
             <h1 className="text-4xl font-bold text-center mb-8">Portfólios de Fotógrafos</h1>
             
             <div className="relative max-w-xl mx-auto">
@@ -78,32 +134,35 @@ const Portfolios = () => {
         </div>
 
         <div className="container max-w-7xl mx-auto px-4 py-12">
-          {filteredPhotographers.map((photographer, index) => (
-            <div key={index} className="mb-16">
-              <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
-                <div className="w-24 h-24 rounded-full bg-[rgba(213,215,244,1)] flex items-center justify-center text-2xl font-bold">
-                  {photographer.name.charAt(0)}
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold">{photographer.name}</h2>
-                  <p className="text-[#5762D5] mb-2">{photographer.handle}</p>
-                  <p className="text-gray-600">{photographer.bio}</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {photographer.photos.map((photo, photoIndex) => (
-                  <div key={photoIndex} className="aspect-square rounded-lg overflow-hidden">
-                    <img 
-                      src={photo.url} 
-                      alt={`Portfolio de ${photographer.name}`} 
-                      className="w-full h-full object-cover"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
+            {filteredPhotographers.map((photographer) => (
+              <Card key={photographer.id} className="relative overflow-hidden rounded-[15px]">
+                <CardContent className="p-0">
+                  <div className="relative aspect-[0.9] w-full">
+                    <img
+                      src={photographer.photos[0].url}
+                      alt={photographer.handle}
+                      className="absolute h-full w-full object-cover inset-0"
                     />
+                    <div className="absolute top-2 left-2 bg-white text-sm text-black font-medium leading-[1.4] px-1.5 py-[5px] rounded-lg">
+                      Em destaque
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-[rgba(236,241,244,1)] flex items-center justify-between px-2.5 py-1.5 rounded-b-[15px]">
+                      <div className="flex items-center gap-[5px] text-sm text-black font-medium whitespace-nowrap leading-[1.4]">
+                        <div className="bg-[rgba(217,217,217,1)] w-[25px] h-[25px] rounded-[5px]" />
+                        <div>{photographer.handle}</div>
+                      </div>
+                      <Link to={`/photographer/${photographer.id}`}>
+                        <button className="text-base text-[#5762D5] font-semibold px-[5px] py-[9px] hover:text-[#4751C4]">
+                          Ver perfil
+                        </button>
+                      </Link>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </main>
 

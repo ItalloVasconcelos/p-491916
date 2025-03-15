@@ -1,12 +1,30 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 
-const photographers = Array(4).fill({
-  image:
-    "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/3cbcfb64594f255c99cca26be28fa123af12c510ddba64001c24d1146ba634b7?placeholderIfAbsent=true",
-  handle: "@nunes.foto",
-});
+const photographers = [
+  {
+    id: "pedro",
+    image: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/3cbcfb64594f255c99cca26be28fa123af12c510ddba64001c24d1146ba634b7?placeholderIfAbsent=true",
+    handle: "@nunes.foto",
+  },
+  {
+    id: "marina",
+    image: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/3cbcfb64594f255c99cca26be28fa123af12c510ddba64001c24d1146ba634b7?placeholderIfAbsent=true",
+    handle: "@marina.costa",
+  },
+  {
+    id: "vini",
+    image: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/3cbcfb64594f255c99cca26be28fa123af12c510ddba64001c24d1146ba634b7?placeholderIfAbsent=true",
+    handle: "@vini.fotografia",
+  },
+  {
+    id: "juliana",
+    image: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/3cbcfb64594f255c99cca26be28fa123af12c510ddba64001c24d1146ba634b7?placeholderIfAbsent=true",
+    handle: "@ju.santos",
+  },
+];
 
 export const PhotographerShowcase = () => {
   return (
@@ -38,9 +56,11 @@ export const PhotographerShowcase = () => {
                     <div className="bg-[rgba(217,217,217,1)] w-[25px] h-[25px] rounded-[5px]" />
                     <div>{photographer.handle}</div>
                   </div>
-                  <button className="text-base text-[#5762D5] font-semibold px-[5px] py-[9px] hover:text-[#4751C4]">
-                    Ver perfil
-                  </button>
+                  <Link to={`/photographer/${photographer.id}`}>
+                    <button className="text-base text-[#5762D5] font-semibold px-[5px] py-[9px] hover:text-[#4751C4]">
+                      Ver perfil
+                    </button>
+                  </Link>
                 </div>
               </div>
             </CardContent>

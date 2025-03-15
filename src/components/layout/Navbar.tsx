@@ -25,11 +25,13 @@ export const Navbar = () => {
     <nav className="min-h-14 w-full text-base font-semibold text-center">
       <div className="bg-[rgba(250,252,254,1)] border-neutral-200 flex min-h-14 w-full items-center gap-[40px_100px] justify-between flex-wrap px-[30px] py-[7px] border-b">
         <div className="self-stretch flex min-w-60 items-center gap-2.5 text-black my-auto">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/d786ce494ecfc97d7d526c534aac2743eab40d2c968bfa0fedf56b60cecfc137?placeholderIfAbsent=true"
-            alt="Logo"
-            className="aspect-[1.43] object-contain w-[60px] self-stretch shrink-0 my-auto"
-          />
+          <Link to="/">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/d786ce494ecfc97d7d526c534aac2743eab40d2c968bfa0fedf56b60cecfc137?placeholderIfAbsent=true"
+              alt="Logo"
+              className="aspect-[1.43] object-contain w-[60px] self-stretch shrink-0 my-auto"
+            />
+          </Link>
           <Link
             to="/sell"
             className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-gray-700"

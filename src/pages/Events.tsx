@@ -1,13 +1,13 @@
-
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { EventCard } from "@/components/home/EventCard";
 import { SearchSection } from "@/components/home/SearchSection";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-// Create a larger array of 16 sample events
 const EXPANDED_EVENTS = Array(16).fill(null).map((_, index) => ({
   photographerHandle: `@${['vini', 'joao', 'marina', 'pedro'][index % 4]}.fotografia`,
   title: [
@@ -55,6 +55,15 @@ const Events = () => {
       <main className="flex flex-col items-center">
         <div className="w-full bg-[rgba(236,241,244,1)] py-16">
           <div className="container max-w-7xl mx-auto px-4">
+            <div className="flex items-center mb-6">
+              <Link to="/">
+                <Button variant="ghost" className="flex items-center gap-2 text-black">
+                  <ArrowLeft className="h-5 w-5" />
+                  Voltar
+                </Button>
+              </Link>
+            </div>
+            
             <h1 className="text-4xl font-bold text-center mb-8">Todos os Eventos</h1>
             
             <div className="relative max-w-xl mx-auto">
