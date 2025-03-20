@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const ContactCTA = () => {
   return (
@@ -17,9 +18,11 @@ export const ContactCTA = () => {
                 seu evento? Na Olha a Foto você encontra um serviço de extrema
                 qualidade para registrar cada emoção
               </p>
-              <button className="bg-[rgba(217,24,26,1)] min-h-[46px] gap-2 text-base text-[#F7F7F9] font-semibold text-center mt-[23px] px-6 py-3.5 rounded-lg hover:bg-[rgba(195,22,24,1)]">
-                Entrar em contato
-              </button>
+              <Link to="/portfolios">
+                <button className="bg-[rgba(217,24,26,1)] min-h-[46px] gap-2 text-base text-[#F7F7F9] font-semibold text-center mt-[23px] px-6 py-3.5 rounded-lg hover:bg-[rgba(195,22,24,1)]">
+                  Contratar fotógrafo
+                </button>
+              </Link>
             </div>
           </div>
 

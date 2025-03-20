@@ -39,7 +39,7 @@ export const Navbar = () => {
             Vender fotos
           </Link>
           <Link
-            to="/hire"
+            to="/portfolios"
             className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-gray-700"
           >
             Contratar fotógrafo
