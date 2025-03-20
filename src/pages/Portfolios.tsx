@@ -2,98 +2,60 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Input } from "@/components/ui/input";
-import { Search, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Search, LayoutGrid } from "lucide-react";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
+import { useAuth } from "@/hooks/useAuth";
 
 // Create photographer portfolio data
 const PHOTOGRAPHERS = [
   {
     id: "vini",
     name: "Vinicius Silva",
-    handle: "@vini.fotografia",
+    handle: "@nunes.foto",
     bio: "Especialista em fotografia de eventos esportivos e outdoor",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `vini_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
+    featured: true,
+    imageUrl: "public/lovable-uploads/ebd5e722-22d4-4698-b701-dd77d46a4c61.png"
   },
   {
     id: "marina",
     name: "Marina Costa",
-    handle: "@marina.costa",
+    handle: "@nunes.foto",
     bio: "Fotógrafa profissional com foco em eventos culturais e sociais",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `marina_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
+    featured: true,
+    imageUrl: "public/lovable-uploads/ebd5e722-22d4-4698-b701-dd77d46a4c61.png"
   },
   {
     id: "pedro",
     name: "Pedro Nunes",
     handle: "@nunes.foto",
     bio: "Fotógrafo especializado em fotografia de eventos corporativos",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `pedro_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
+    featured: true,
+    imageUrl: "public/lovable-uploads/ebd5e722-22d4-4698-b701-dd77d46a4c61.png"
   },
   {
     id: "juliana",
     name: "Juliana Santos",
-    handle: "@ju.santos",
+    handle: "@nunes.foto",
     bio: "Especialista em fotografia de casamentos e eventos sociais",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `juliana_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
+    featured: true,
+    imageUrl: "public/lovable-uploads/ebd5e722-22d4-4698-b701-dd77d46a4c61.png"
   },
-  {
-    id: "carlos",
-    name: "Carlos Mendes",
-    handle: "@carlos.photos",
-    bio: "Fotógrafo especializado em fotografia de natureza e paisagens",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `carlos_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
-  },
-  {
-    id: "ana",
-    name: "Ana Oliveira",
-    handle: "@ana.oliveira",
-    bio: "Fotógrafa com foco em eventos corporativos e retratos profissionais",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `ana_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
-  },
-  {
-    id: "roberto",
-    name: "Roberto Lima",
-    handle: "@roberto.lima",
-    bio: "Fotógrafo especializado em fotografia esportiva e de ação",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `roberto_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
-  },
-  {
-    id: "camila",
-    name: "Camila Rocha",
-    handle: "@camila.rocha",
-    bio: "Fotógrafa de eventos culturais e shows",
-    photos: Array(4).fill(null).map((_, i) => ({ 
-      id: `camila_${i}`,
-      url: "https://cdn.builder.io/api/v1/image/assets/059fbcc2d8a7476eb4c7b1b08bffc061/055db543e086a0fe64b4d3e79c113053d74c2cb2ca5be3b81ae5117629695966?placeholderIfAbsent=true"
-    }))
-  }
-];
+].concat(Array(16).fill(null).map((_, i) => ({
+  id: `photographer-${i + 5}`,
+  name: `Fotógrafo ${i + 5}`,
+  handle: "@nunes.foto",
+  bio: "Fotógrafo especializado em eventos",
+  featured: true,
+  imageUrl: "public/lovable-uploads/ebd5e722-22d4-4698-b701-dd77d46a4c61.png"
+})));
 
 const Portfolios = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage] = useState(1);
+  const { isAuthenticated } = useAuth();
 
   const filteredPhotographers = PHOTOGRAPHERS.filter(
     (photographer) =>
@@ -103,70 +65,167 @@ const Portfolios = () => {
   );
 
   return (
-    <div className="bg-[rgba(250,252,254,1)] flex flex-col overflow-hidden items-stretch">
+    <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
 
-      <main className="flex flex-col items-center">
-        <div className="w-full bg-[rgba(236,241,244,1)] py-16">
-          <div className="container max-w-7xl mx-auto px-4">
-            <div className="flex items-center mb-6">
-              <Link to="/">
-                <Button variant="ghost" className="flex items-center gap-2 text-black">
-                  <ArrowLeft className="h-5 w-5" />
-                  Voltar
-                </Button>
-              </Link>
-            </div>
-            
-            <h1 className="text-4xl font-bold text-center mb-8">Portfólios de Fotógrafos</h1>
-            
-            <div className="relative max-w-xl mx-auto">
+      <main className="flex-grow">
+        <div className="container max-w-7xl mx-auto px-4 py-6">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold mb-2">Portfólios</h1>
+            <p className="text-xl">Escolha um de nossos especialistas para registrar seu evento!</p>
+          </div>
+
+          {/* Search and Filters */}
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="flex-grow relative">
               <Input
                 type="text"
-                placeholder="Buscar por nome ou especialidade..."
+                placeholder="Pesquisar evento"
                 className="pl-10 h-12"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             </div>
-          </div>
-        </div>
+            
+            <div className="flex gap-2">
+              <Button variant="ghost" className="border border-gray-300 px-2 h-12 w-12">
+                <LayoutGrid className="h-5 w-5" />
+              </Button>
+              
+              <div className="w-40">
+                <Select>
+                  <SelectTrigger className="h-12">
+                    <SelectValue placeholder="Cidade" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="fortaleza">Fortaleza</SelectItem>
+                    <SelectItem value="sao-paulo">São Paulo</SelectItem>
+                    <SelectItem value="rio">Rio de Janeiro</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-        <div className="container max-w-7xl mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
+              <Button className="bg-red-600 hover:bg-red-700 h-12 flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Pesquisar
+              </Button>
+
+              <div className="w-40">
+                <Select>
+                  <SelectTrigger className="h-12">
+                    <SelectValue placeholder="Ordenar por" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="recent">Mais recentes</SelectItem>
+                    <SelectItem value="oldest">Mais antigos</SelectItem>
+                    <SelectItem value="az">A-Z</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Photographers Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
             {filteredPhotographers.map((photographer) => (
-              <Card key={photographer.id} className="relative overflow-hidden rounded-[15px]">
-                <CardContent className="p-0">
-                  <div className="relative aspect-[0.9] w-full">
-                    <img
-                      src={photographer.photos[0].url}
-                      alt={photographer.handle}
-                      className="absolute h-full w-full object-cover inset-0"
-                    />
-                    <div className="absolute top-2 left-2 bg-white text-sm text-black font-medium leading-[1.4] px-1.5 py-[5px] rounded-lg">
+              <div key={photographer.id} className="group">
+                <div className="relative rounded-md overflow-hidden aspect-square">
+                  <img 
+                    src={photographer.imageUrl} 
+                    alt={photographer.name} 
+                    className="w-full h-full object-cover"
+                  />
+                  {photographer.featured && (
+                    <div className="absolute top-3 left-3 bg-white text-black rounded-md px-2 py-1 text-sm">
                       Em destaque
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 bg-[rgba(236,241,244,1)] flex items-center justify-between px-2.5 py-1.5 rounded-b-[15px]">
-                      <div className="flex items-center gap-[5px] text-sm text-black font-medium whitespace-nowrap leading-[1.4]">
-                        <div className="bg-[rgba(217,217,217,1)] w-[25px] h-[25px] rounded-[5px]" />
-                        <div>{photographer.handle}</div>
-                      </div>
-                      <Link to={`/photographer/${photographer.id}`}>
-                        <button className="text-base text-[#5762D5] font-semibold px-[5px] py-[9px] hover:text-[#4751C4]">
-                          Ver perfil
-                        </button>
-                      </Link>
-                    </div>
+                  )}
+                </div>
+                <div className="flex items-center justify-between py-2 px-1 bg-gray-100 rounded-b-md">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-gray-300 rounded-md"></div>
+                    <span className="text-sm font-medium">{photographer.handle}</span>
                   </div>
-                </CardContent>
-              </Card>
+                  <Link to={`/photographer/${photographer.id}`}>
+                    <span className="text-blue-600 font-semibold text-sm">Ver perfil</span>
+                  </Link>
+                </div>
+              </div>
             ))}
           </div>
+
+          {/* Pagination */}
+          <Pagination className="my-8">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationLink href="#" className="text-blue-600">
+                  &lt; Anterior
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" isActive className={currentPage === 1 ? "bg-blue-100 text-blue-600" : ""}>
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" className={currentPage === 2 ? "bg-blue-100 text-blue-600" : ""}>
+                  2
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" className={currentPage === 3 ? "bg-blue-100 text-blue-600" : ""}>
+                  3
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" className={currentPage === 4 ? "bg-blue-100 text-blue-600" : ""}>
+                  4
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" className="text-blue-600">
+                  Seguinte &gt;
+                </PaginationLink>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       </main>
 
-      <Footer />
+      {/* Footer with sections */}
+      <div className="border-t border-gray-200 pt-8 pb-12">
+        <div className="container max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">Quem somos</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Sobre nós</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Manifesto</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Contato</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Termos de uso</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-lg mb-4">Soluções</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Encontrar fotos</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Para fotógrafos</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Explorar</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-lg mb-4">Ajuda</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Como o Olha a Foto funciona</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Central de ajuda</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Perguntas frequentes</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
