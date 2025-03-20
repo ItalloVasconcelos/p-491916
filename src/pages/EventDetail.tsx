@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { MapPin, Search } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -32,9 +31,9 @@ const EventDetail = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       
-      <div className="container max-w-7xl mx-auto px-4 py-6">
+      <div className="container max-w-6xl mx-auto px-4 py-6">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm mb-4">
+        <div className="flex items-center gap-2 text-sm mb-8">
           <Link to="/" className="text-blue-600 hover:underline">Home</Link>
           <span>&gt;</span>
           <Link to="/events" className="text-blue-600 hover:underline">Explorar</Link>
@@ -92,11 +91,11 @@ const EventDetail = () => {
           ))}
         </div>
         
-        {/* Pagination */}
+        {/* Pagination - improved spacing */}
         <Pagination className="my-8">
-          <PaginationContent>
+          <PaginationContent className="gap-4">
             <PaginationItem>
-              <PaginationLink href="#" className="text-blue-600">
+              <PaginationLink href="#" className="text-blue-600 px-4">
                 &lt; Anterior
               </PaginationLink>
             </PaginationItem>
@@ -121,7 +120,7 @@ const EventDetail = () => {
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#" className="text-blue-600">
+              <PaginationLink href="#" className="text-blue-600 px-4">
                 Seguinte &gt;
               </PaginationLink>
             </PaginationItem>
@@ -131,7 +130,7 @@ const EventDetail = () => {
       
       {/* Footer with sections */}
       <div className="border-t border-gray-200 pt-8 pb-12 bg-white">
-        <div className="container max-w-7xl mx-auto px-4">
+        <div className="container max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="font-bold text-lg mb-4">Quem somos</h3>

@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, LayoutGrid } from "lucide-react";
@@ -37,7 +36,7 @@ const Events = () => {
       <Navbar />
 
       <main className="flex-grow">
-        <div className="container max-w-7xl mx-auto px-4 py-6">
+        <div className="container max-w-6xl mx-auto px-4 py-6">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm mb-8">
             <Link to="/" className="text-blue-600 hover:underline">Home</Link>
@@ -130,9 +129,9 @@ const Events = () => {
 
           {/* Pagination */}
           <Pagination className="my-8">
-            <PaginationContent>
+            <PaginationContent className="gap-4">
               <PaginationItem>
-                <PaginationLink href="#" className="text-blue-600">
+                <PaginationLink href="#" className="text-blue-600 px-4">
                   &lt; Anterior
                 </PaginationLink>
               </PaginationItem>
@@ -157,7 +156,7 @@ const Events = () => {
                 </PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href="#" className="text-blue-600">
+                <PaginationLink href="#" className="text-blue-600 px-4">
                   Seguinte &gt;
                 </PaginationLink>
               </PaginationItem>
@@ -168,7 +167,7 @@ const Events = () => {
 
       {/* Footer with sections */}
       <div className="border-t border-gray-200 pt-8 pb-12">
-        <div className="container max-w-7xl mx-auto px-4">
+        <div className="container max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="font-bold text-lg mb-4">Quem somos</h3>

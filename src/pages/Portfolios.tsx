@@ -69,7 +69,14 @@ const Portfolios = () => {
       <Navbar />
 
       <main className="flex-grow">
-        <div className="container max-w-7xl mx-auto px-4 py-6">
+        <div className="container max-w-6xl mx-auto px-4 py-6">
+          {/* Breadcrumb - added to match Events page */}
+          <div className="flex items-center gap-2 text-sm mb-8">
+            <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+            <span>&gt;</span>
+            <span className="text-gray-700">Portfólios</span>
+          </div>
+
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Portfólios</h1>
@@ -156,11 +163,11 @@ const Portfolios = () => {
             ))}
           </div>
 
-          {/* Pagination */}
+          {/* Pagination - adjusted spacing */}
           <Pagination className="my-8">
-            <PaginationContent>
+            <PaginationContent className="gap-4">
               <PaginationItem>
-                <PaginationLink href="#" className="text-blue-600">
+                <PaginationLink href="#" className="text-blue-600 px-4">
                   &lt; Anterior
                 </PaginationLink>
               </PaginationItem>
@@ -185,7 +192,7 @@ const Portfolios = () => {
                 </PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href="#" className="text-blue-600">
+                <PaginationLink href="#" className="text-blue-600 px-4">
                   Seguinte &gt;
                 </PaginationLink>
               </PaginationItem>
@@ -196,7 +203,7 @@ const Portfolios = () => {
 
       {/* Footer with sections */}
       <div className="border-t border-gray-200 pt-8 pb-12">
-        <div className="container max-w-7xl mx-auto px-4">
+        <div className="container max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="font-bold text-lg mb-4">Quem somos</h3>
