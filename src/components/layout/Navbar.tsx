@@ -1,15 +1,23 @@
 
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { AuthModals } from "@/components/auth/AuthModals";
+import { PhotographerAuthModals } from "@/components/auth/PhotographerAuthModals";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, UserCog, Image } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
-export const Navbar = () => {
+interface NavbarProps {
+  sellPageMode?: boolean;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ sellPageMode = false }) => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [photographerAuthModalOpen, setPhotographerAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<"login" | "register">("login");
-  const { isAuthenticated, login, logout } = useAuth();
+  const [photographerAuthModalMode, setPhotographerAuthModalMode] = useState<"login" | "register">("login");
+  const { isAuthenticated, logout } = useAuth();
+  const location = useLocation();
 
   const handleLoginClick = () => {
     setAuthModalMode("login");
@@ -19,6 +27,11 @@ export const Navbar = () => {
   const handleRegisterClick = () => {
     setAuthModalMode("register");
     setAuthModalOpen(true);
+  };
+
+  const handlePhotographerLoginClick = () => {
+    setPhotographerAuthModalMode("login");
+    setPhotographerAuthModalOpen(true);
   };
 
   return (
@@ -32,73 +45,96 @@ export const Navbar = () => {
               className="aspect-[1.43] object-contain w-[60px] self-stretch shrink-0 my-auto"
             />
           </Link>
-          <Link
-            to="/sell"
-            className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-gray-700"
-          >
-            Vender fotos
-          </Link>
-          <Link
-            to="/portfolios"
-            className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-gray-700"
-          >
-            Contratar fotógrafo
-          </Link>
+          {!sellPageMode && (
+            <>
+              <Link
+                to="/sell"
+                className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-gray-700"
+              >
+                Vender fotos
+              </Link>
+              <Link
+                to="/portfolios"
+                className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-gray-700"
+              >
+                Contratar fotógrafo
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="self-stretch flex min-w-60 items-center gap-[15px] text-[#5762D5] whitespace-nowrap my-auto">
-          <Button
-            variant="ghost"
-            className="self-stretch min-h-9 flex items-center gap-2 text-[#0E0E2C] justify-center my-auto px-[5px] py-1.5"
-          >
-            <ShoppingCart className="h-6 w-6" />
-            <span className="self-stretch my-auto">Carrinho</span>
-          </Button>
+          {!sellPageMode && (
+            <Button
+              variant="ghost"
+              className="self-stretch min-h-9 flex items-center gap-2 text-[#0E0E2C] justify-center my-auto px-[5px] py-1.5"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              <span className="self-stretch my-auto">Carrinho</span>
+            </Button>
+          )}
 
-          <div className="bg-[rgba(241,243,244,1)] self-stretch flex w-px shrink-0 h-9 gap-2.5 my-auto" />
+          {!sellPageMode && <div className="bg-[rgba(241,243,244,1)] self-stretch flex w-px shrink-0 h-9 gap-2.5 my-auto" />}
 
           {isAuthenticated ? (
             <>
-              <Link
-                to="/my-photos"
-                className="self-stretch min-h-9 flex items-center gap-1.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
-              >
-                <Image className="h-5 w-5" />
-                Minhas Fotos
-              </Link>
-              <Button
-                onClick={() => logout()}
-                variant="ghost"
-                className="self-stretch min-h-9 flex items-center gap-1.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
-              >
-                <UserCog className="h-5 w-5" />
-                Minha Conta
-              </Button>
+              {!sellPageMode && (
+                <>
+                  <Link
+                    to="/my-photos"
+                    className="self-stretch min-h-9 flex items-center gap-1.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
+                  >
+                    <Image className="h-5 w-5" />
+                    Minhas Fotos
+                  </Link>
+                  <Button
+                    onClick={() => logout()}
+                    variant="ghost"
+                    className="self-stretch min-h-9 flex items-center gap-1.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
+                  >
+                    <UserCog className="h-5 w-5" />
+                    Minha Conta
+                  </Button>
+                </>
+              )}
             </>
           ) : (
             <>
-              <button
-                onClick={handleRegisterClick}
-                className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
-              >
-                Cadastrar
-              </button>
+              {!sellPageMode ? (
+                <>
+                  <button
+                    onClick={handleRegisterClick}
+                    className="self-stretch min-h-9 gap-2.5 my-auto px-[5px] py-[9px] hover:text-[#4751C4]"
+                  >
+                    Cadastrar
+                  </button>
 
-              <button
-                onClick={handleLoginClick}
-                className="self-stretch min-h-9 gap-2.5 my-auto px-5 py-[9px] rounded-md border-[rgba(87,98,213,1)] border-solid border-2 hover:bg-[rgba(87,98,213,0.1)]"
-              >
-                Entrar
-              </button>
+                  <button
+                    onClick={handleLoginClick}
+                    className="self-stretch min-h-9 gap-2.5 my-auto px-5 py-[9px] rounded-md border-[rgba(87,98,213,1)] border-solid border-2 hover:bg-[rgba(87,98,213,0.1)]"
+                  >
+                    Entrar
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={handlePhotographerLoginClick}
+                  className="self-stretch min-h-9 gap-2.5 my-auto px-5 py-[9px] rounded-md border-[#FF6B00] text-[#FF6B00] border-solid border-2 hover:bg-[rgba(255,107,0,0.1)]"
+                >
+                  Entrar
+                </button>
+              )}
             </>
           )}
 
-          <Link
-            to="/explore"
-            className="self-stretch bg-[rgba(217,24,26,1)] min-h-9 gap-2.5 text-[#F7F7F9] my-auto px-5 py-[9px] rounded-md hover:bg-[rgba(195,22,24,1)]"
-          >
-            Explorar
-          </Link>
+          {!sellPageMode && (
+            <Link
+              to="/explore"
+              className="self-stretch bg-[rgba(217,24,26,1)] min-h-9 gap-2.5 text-[#F7F7F9] my-auto px-5 py-[9px] rounded-md hover:bg-[rgba(195,22,24,1)]"
+            >
+              Explorar
+            </Link>
+          )}
         </div>
       </div>
 
@@ -106,6 +142,12 @@ export const Navbar = () => {
         isOpen={authModalOpen} 
         onOpenChange={setAuthModalOpen} 
         initialMode={authModalMode} 
+      />
+      
+      <PhotographerAuthModals
+        isOpen={photographerAuthModalOpen}
+        onOpenChange={setPhotographerAuthModalOpen}
+        initialMode={photographerAuthModalMode}
       />
     </nav>
   );
